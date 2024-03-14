@@ -10,22 +10,25 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../assets/moviereel.png';
+import { useNavigate } from 'react-router-dom';
+import CustomButton from './customButton';
 
 const pages = ['Movies', 'TV Shows'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+const Navbar = ({bgc="black", opacity=1}) => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
+    const handlePage = (page) => {
+        if(page === 'Movies')
+            navigate('/movies');
     };
 
     const handleCloseUserMenu = () => {
@@ -33,16 +36,18 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="sticky" sx={{bgcolor:'black'}}>
+        <AppBar position="sticky"
+        sx={{bgcolor:bgc, opacity:opacity}}
+        >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'flex' }, mr: 1 }} /> */}
-                    
-                    <Typography
+                    <img src={logo} style={{backgroundColor:'white'}} width='30px' height='30px'/>
+                    <CustomButton onClick={ () => navigate('/')} />
+                    {/* <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        // href="#app-bar-with-responsive-menu"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -51,20 +56,22 @@ const Navbar = () => {
                             // letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
+                            marginLeft: '0.5%',
+                            cursor: 'pointer'
                         }}
                     >
                         SRK Movies
-                    </Typography>
+                    </Typography> */}
                     
                     <Box sx={{ flexGrow: 2, 
                         display: { xs: 'flex', md: 'flex' }, 
                         justifyContent:'flex-end', 
                         marginRight:6
                         }}>
-                        {pages.map((page) => (
+                        {pages?.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={()=>handlePage(page)}
                                 sx={{ my: 2, color: 'white', display: 'block', m:2 }}
                             >
                                 {page}

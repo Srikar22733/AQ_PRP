@@ -1,33 +1,38 @@
 import './App.css';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import Navbar from './components/navBar';
-import Home from './pages/home';
-// import Login from './Pages/Login'
-// import SignUp from './Pages/Signup';
+import Home from './containers/home';
+import MoviesDetails from './containers/moviesDetailsPage';
+import { useEffect, useState } from 'react'
+import MoviesPage from './containers/moviesPage';
 
 function App() {
+
+  const [isTransparent, setIsTransparent] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = document.documentElement.scrollTop;
+      setIsTransparent(scrollTop === 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div className="App">
-      <ThemeProvider theme>
-        <Navbar />
-        <Home />
-      </ThemeProvider>
-      {/* <Login />
-      <SignUp /> */}
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+          <Navbar opacity={isTransparent ? 1 : 0.9} />
+          <Routes>
+            <Route path='/' Component={Home} />
+            <Route path='/movieDetail/:movieId' Component={MoviesDetails} />
+            <Route path='/movies' Component={MoviesPage} />
+            <Route path='*' />
+          </Routes>
     </div>
   );
 }
