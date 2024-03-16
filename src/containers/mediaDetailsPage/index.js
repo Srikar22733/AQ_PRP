@@ -5,20 +5,28 @@ import movieData from '../../services/movieApi';
 import apiConfig from '../../services/apiConfig';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import {Rating} from '@mui/material';
+import { Rating } from '@mui/material';
 import { StarOutline } from '@mui/icons-material';
 
-const MoviesDetails = () => {
+const MediaDetails = () => {
 
-    const [movieDetail, setmovieDetail] = useState([]);
-    const { movieId } = useParams();
+    const [detail, setDetail] = useState([]);
+    const { Id, type } = useParams();
     const [rating, setRating] = useState(0);
-    
+
     useEffect(() => {
         const getMovieById = async () => {
             try {
-                const response = await movieData?.getMovieById(movieId);
-                setmovieDetail(response?.data);
+                if (type === 'movie') {
+                    const response = await movieData?.getMovieById(Id);
+                    setDetail(response?.data);
+
+                }
+                if (type === 'tv') {
+                    console.log('going in')
+                    const response = await movieData.getTvListById(Id);
+                    setDetail(response?.data);
+                }
             }
             catch (error) {
                 console.log(error)
@@ -28,21 +36,23 @@ const MoviesDetails = () => {
     }, []);
 
     useEffect(() => {
-        setRating(movieDetail.vote_average);
-    },[movieDetail]);
+        setRating(detail.vote_average);
+    }, [detail]);
+
+    console.log(detail,"Details")
 
     return (
         <Box
             sx={{
                 height: 'calc(87vh - 64px)',
                 overflow: 'hidden',
-                backgroundImage: ` linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url(${apiConfig?.originalImg(movieDetail?.backdrop_path)})`,
+                backgroundImage: ` linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url(${apiConfig?.originalImg(detail?.backdrop_path)})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 display: 'flex',
                 alignItems: 'center',
-                paddingTop:'5%',
+                paddingTop: '5%',
             }}
         >
             <Grid container flexWrap='nowrap'>
@@ -55,7 +65,7 @@ const MoviesDetails = () => {
                     }}>
                         <CardMedia sx={{ height: 280 }}
                             component={'img'}
-                            image={`${apiConfig?.originalImg(movieDetail?.poster_path)}`}
+                            image={`${apiConfig?.originalImg(detail?.poster_path)}`}
                             loading='lazy'
                             style={{
                                 width: '100%',
@@ -71,9 +81,9 @@ const MoviesDetails = () => {
                 </Grid>
                 <Grid item xs={7} >
                     <Box>
-                        <Typography sx={{ userSelect: 'none' }} color={'white'} variant='h3'>{movieDetail.original_title}</Typography>
+                        <Typography sx={{ userSelect: 'none' }} color={'white'} variant='h3'>{detail?.original_title ? detail?.original_title : detail?.original_name}</Typography>
                         <Grid container spacing={1}>
-                            {movieDetail?.genres?.map((genre, index) => (
+                            {detail?.genres?.map((genre, index) => (
                                 <Grid item
                                     key={index}
                                 >
@@ -90,21 +100,29 @@ const MoviesDetails = () => {
                             ))
                             }
                         </Grid>
+                        {
+                            rating ?
                         <Grid container sx={{ mt: 2 }} spacing={2}>
                             <Grid item >
-                                <Typography sx={{userSelect:'none'}} color='white'>Rating</Typography>
+                                <Typography sx={{ userSelect: 'none' }} color='white'>Rating</Typography>
                             </Grid>
                             <Grid item>
-                                <Rating 
-                                name="read-only" 
-                                value={(rating/2)} 
-                                readOnly
-                                emptyIcon={<StarOutline style={{ color: 'white' }} />} 
+                                <Rating
+                                    name="read-only"
+                                    value={(rating / 2)}
+                                    readOnly
+                                    emptyIcon={<StarOutline style={{ color: 'white' }} />}
                                 />
                             </Grid>
+                            <Grid item>
+                                <Typography sx={{ userSelect: 'none'}} color='white'>({detail.vote_count})</Typography>
+                            </Grid>
                         </Grid>
+                        :
+                        <Typography sx={{ userSelect: 'none', pt:2 }} color='white' >No Rating</Typography>
+                        }
                         <Box sx={{ width: '70%', mt: 5 }}>
-                            <Typography sx={{ userSelect: 'none' }} color={'white'}>{movieDetail?.overview}</Typography>
+                            <Typography sx={{ userSelect: 'none' }} color={'white'}>{detail?.overview}</Typography>
                         </Box>
                     </Box>
                 </Grid>
@@ -113,4 +131,4 @@ const MoviesDetails = () => {
     )
 }
 
-export default MoviesDetails
+export default MediaDetails

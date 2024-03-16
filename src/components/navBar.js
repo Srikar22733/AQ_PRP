@@ -14,7 +14,7 @@ import logo from '../assets/moviereel.png';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from './customButton';
 
-const pages = ['Movies', 'TV Shows'];
+const pages = ['Movies', 'TvShows', 'Favourites', 'WatchList'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = ({bgc="black", opacity=1}) => {
@@ -27,8 +27,18 @@ const Navbar = ({bgc="black", opacity=1}) => {
     };
 
     const handlePage = (page) => {
-        if(page === 'Movies')
-            navigate('/movies');
+        if(page === 'Movies') {
+            navigate('movies');
+        }
+        if(page === 'TvShows') {
+            navigate('tvshow');
+        }
+        if(page === 'Favourites') {
+            navigate('fav');
+        }
+        if(page === 'WatchList') {
+            navigate('watchList');
+        }
     };
 
     const handleCloseUserMenu = () => {
@@ -42,27 +52,7 @@ const Navbar = ({bgc="black", opacity=1}) => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <img src={logo} style={{backgroundColor:'white'}} width='30px' height='30px'/>
-                    <CustomButton onClick={ () => navigate('/')} />
-                    {/* <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        // href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            // letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                            marginLeft: '0.5%',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        SRK Movies
-                    </Typography> */}
-                    
+                    <CustomButton onClick={ () => navigate('/')} />                    
                     <Box sx={{ flexGrow: 2, 
                         display: { xs: 'flex', md: 'flex' }, 
                         justifyContent:'flex-end', 

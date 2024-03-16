@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import movieData, { category } from '../../services/movieApi'
 import { Grid, Pagination, Box, Typography } from '@mui/material'
-import MovieCard from '../../components/mediaCard'
+import Mediacard from '../../components/mediaCard'
 import apiConfig from '../../services/apiConfig'
 
-const MoviesPage = () => {
+const TvShowPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
     const params = {
         page: currentPage,
     }
 
-    const [moviesList, setMoviesList] = useState([]);
+    const [tvShowList, setTvShowList] = useState([]);
     useEffect(() => {
         const getMovies = async () => {
             try {
-                setIsLoading(true);
-                const response = await movieData?.getMoviesList(category.movie, params);
+                const response = await movieData?.getTVList(category.tv, params);
                 if (response) {
-                    setMoviesList(response?.data?.results);
+                    setTvShowList(response?.data?.results);
                 }
                 console.log(response)
             }
             catch (error) {
                 console.log(error)
-            }
-            finally {
-                setIsLoading(false);
             }
         }
         getMovies();
@@ -43,19 +38,19 @@ const MoviesPage = () => {
         >
             <Grid container direction={'row'}>
                 {
-                    moviesList.map((movies, index) => (
+                    tvShowList.map((tvshow, index) => (
                         <Grid item
                             sx={{ display: 'grid', placeItems: 'center', p: '5px' }}
                             xs={12} sm={6} md={4} lg={3} xl={2}
                             key={index}
                         >
-                            <MovieCard
-                                listType='movie'
+                            <Mediacard
+                                listType='tv'
                                 key={index}
-                                movieId={movies?.id}
-                                imageurl={apiConfig?.originalImg(movies?.poster_path)}
-                                imgtitle={movies?.overview}
-                                movietitle={movies?.original_title}
+                                tvId={tvshow?.id}
+                                imageurl={apiConfig?.originalImg(tvshow?.poster_path)}
+                                imgtitle={tvshow?.overview}
+                                movietitle={tvshow?.original_name}
                             />
                         </Grid>
                     ))
@@ -86,4 +81,4 @@ const MoviesPage = () => {
     )
 }
 
-export default MoviesPage
+export default TvShowPage
