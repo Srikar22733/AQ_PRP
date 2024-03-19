@@ -56,6 +56,8 @@ const MoviesPage = () => {
                                 imageurl={apiConfig?.originalImg(movies?.poster_path)}
                                 imgtitle={movies?.overview}
                                 movietitle={movies?.original_title}
+                                favourited={movies?.isFavourite}
+                                watchlisted={movies?.isWatchList}
                             />
                         </Grid>
                     ))

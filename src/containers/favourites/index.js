@@ -5,8 +5,8 @@ import { Grid, Box, Typography } from "@mui/material";
 const FavouritesList = () => {
     const favMovieData = useSelector(state => state.media.movieFav);
     const favTvShowData = useSelector(state => state.media.tvShowFav);
-    const watchListMovieData = useSelector(state => state.media.movieWatch);
-    const watchTvShowData = useSelector(state => state.media.tvShowWatch);
+    // const watchListMovieData = useSelector(state => state.media.movieWatch);
+    // const watchTvShowData = useSelector(state => state.media.tvShowWatch);
     console.log(favMovieData, "movie")
     console.log(favTvShowData, "tv")
 
@@ -31,9 +31,9 @@ const FavouritesList = () => {
                                                 <Mediacard
                                                     key={index}
                                                     listType={movies?.listType}
-                                                    movieId={movies?.movieId}
+                                                    movieId={movies?.id}
                                                     imageurl={movies.imageurl}
-                                                    movietitle={movies?.movietitle}
+                                                    mediatitle={movies?.mediatitle}
                                                     favourite={movies?.isFavourite}
                                                 />
                                             </Grid>
@@ -58,10 +58,11 @@ const FavouritesList = () => {
                                                 <Mediacard
                                                     key={index}
                                                     listType={tvshow?.listType}
-                                                    tvId={tvshow?.tvId}
+                                                    tvId={tvshow?.id}
                                                     imageurl={tvshow?.imageurl}
-                                                    movietitle={tvshow?.movietitle}
-                                                    favourite={tvshow?.isFavourite}
+                                                    mediatitle={tvshow?.mediatitle}
+                                                    favourited={tvshow?.isFavourite}
+                                                    watchlisted={tvshow?.isWatchListed}
                                                 />
                                             </Grid>
                                         ))
@@ -73,7 +74,7 @@ const FavouritesList = () => {
                 </Box>
             )
             :
-            <Typography>No data to show</Typography>
+            <Typography color='white'>No data to show</Typography>
     )
 }
 

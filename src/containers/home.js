@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import MovieCard from '../components/mediaCard'
+import Mediacard from '../components/mediaCard'
 import { Grid, Typography } from '@mui/material'
 import movieData, { category, type } from '../services/movieApi'
 import apiConfig from '../services/apiConfig'
@@ -33,8 +33,8 @@ const Home = () => {
 
         <>
             <Box
-                sx={{ bgcolor: 'black', padding: '1rem' }}>
-                <Typography color='white' variant='h4' sx={{ userSelect: 'none', pb:5 }}>Top rated Movies</Typography>
+                sx={{ padding: '1rem' }}>
+                <Typography color='white' variant='h4' sx={{ userSelect: 'none', pb: 5 }}>Top rated Movies</Typography>
                 <Grid container
                 >
                     {/* <Carousel animation="slide" 
@@ -65,19 +65,19 @@ const Home = () => {
                                 xs={12} sm={6} md={4} lg={3} xl={2}
                                 key={index}
                             >
-                                <MovieCard
+                                <Mediacard
                                     key={index}
                                     listType='movie'
                                     movieId={movies?.id}
                                     imageurl={apiConfig?.originalImg(movies?.poster_path)}
                                     imgtitle={movies?.overview}
-                                    movietitle={movies?.original_title}
+                                    mediatitle={movies?.original_title}
                                 />
                             </Grid>
                         ))
                     }
                 </Grid>
-                <Typography color='white' variant='h4' sx={{ userSelect: 'none', pt:5, pb:5 }}>Top rated TV Shows</Typography>
+                <Typography color='white' variant='h4' sx={{ userSelect: 'none', pt: 5, pb: 5 }}>Top rated TV Shows</Typography>
                 <Grid container>
                     {
                         tvList.map((tvshow, index) => (
@@ -86,13 +86,13 @@ const Home = () => {
                                 xs={12} sm={6} md={4} lg={3} xl={2}
                                 key={index}
                             >
-                                <MovieCard
+                                <Mediacard
                                     key={index}
                                     listType='tv'
                                     tvId={tvshow?.id}
                                     imageurl={apiConfig?.originalImg(tvshow?.poster_path)}
                                     imgtitle={tvshow?.overview}
-                                    movietitle={tvshow?.original_name}
+                                    mediatitle={tvshow?.original_name}
                                 />
                             </Grid>
                         ))

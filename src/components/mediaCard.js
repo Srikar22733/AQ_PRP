@@ -11,15 +11,15 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import NoImage from '../assets/NoImage.jpg';
 import { useDispatch } from 'react-redux';
-import { movieAddToFav, movieAddtoWatch, movieRemoveFav, movieremoveWatch, tvShowAddToFav, tvShowAddtoWatch, tvShowRemoveFav, tvShowremoveWatch } from '../redux/movieSlice'
+import { movieAddToFav, movieAddtoWatch, movieRemoveFav, movieremoveWatch, tvShowAddToFav, tvShowAddtoWatch, tvShowRemoveFav, tvShowremoveWatch, } from '../redux/movieSlice'
 import { useSelector } from "react-redux"
 
 
-const Mediacard = ({ movieId, tvId, imageurl, imgtitle, movietitle, width = 170, height = 280, borderRadius = '20px', listType, favourite, watchList }) => {
+const Mediacard = ({ movieId, tvId, imageurl, imgtitle, mediatitle, width = 170, height = 280, borderRadius = '20px', listType, favourited, watchlisted }) => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isFavourite, setIsFavourite] = useState(favourite ? favourite : false);
-  const [isWatchListed, setIsWatchListed] = useState(watchList ? watchList : false);
+  const [isFavourite, setIsFavourite] = useState(favourited? favourited : false);
+  const [isWatchListed, setIsWatchListed] = useState(watchlisted? watchlisted : false);
 
   //Get data from redux
 
@@ -29,74 +29,42 @@ const Mediacard = ({ movieId, tvId, imageurl, imgtitle, movietitle, width = 170,
   const watchTvShowData = useSelector(state => state.media.tvShowWatch);
 
   useEffect(() => {
-    const isMovieFavourite = favMovieData.some(item => item.movieId === movieId);
-    const isTvShowFavourite = favTvShowData.some(item => item.tvId === tvId);
-    const isMovieWatchList = watchListMovieData.some(item =>item.movieId === movieId)
-    const isTvShowWatchList = watchTvShowData.some(item =>item.tvId === tvId)
+    
+    console.log("Entering useEffect");
+    const isMovieFavourite = favMovieData.some(item => item.id === movieId);
+    const isTvShowFavourite = favTvShowData.some(item => item.id === tvId);
+    const isMovieWatchList = watchListMovieData.some(item =>item.id === movieId)
+    const isTvShowWatchList = watchTvShowData.some(item =>item.id === tvId)
 
-    if (isMovieFavourite) {
+    if (isMovieFavourite || isTvShowFavourite) {
       setIsFavourite(true);
     }
-    if (isTvShowFavourite) {
-      setIsFavourite(true);
-    }
-    if (isMovieWatchList) {
+    if (isMovieWatchList || isTvShowWatchList) {
       setIsWatchListed(true);
     }
-    if (isTvShowWatchList) {
-      setIsWatchListed(true);
-    }
-  }, [isFavourite,isWatchListed]);
+  }, [movieId,tvId]);
 
-  const movieInfo = { movieId, imageurl, movietitle, listType }
-  const tvInfo = { tvId, imageurl, movietitle, listType }
+  // const movieInfo = { movieId, imageurl, movietitle, listType }
+  // const tvInfo = { tvId, imageurl, movietitle, listType }
   const dispatch = useDispatch();
 
   const handleFavourites = () => {
-    if (listType === 'movie') {
-      if (!isFavourite) {
-        dispatch(movieAddToFav({ ...movieInfo, isFavourite: true }));
-        setIsFavourite(!isFavourite);
-      }
-      if (isFavourite) {
-        dispatch(movieRemoveFav({ ...movieInfo, isFavourite: false }));
-        setIsFavourite(!isFavourite);
-      }
+    const mediaInfo = { id: listType === 'movie' ? movieId : tvId, imageurl,mediatitle, listType,isFavourite:true };
+    if (!isFavourite) {
+      dispatch(listType === 'movie' ? movieAddToFav(mediaInfo) : tvShowAddToFav(mediaInfo));
+    } else {
+      dispatch(listType === 'movie' ? movieRemoveFav(mediaInfo) : tvShowRemoveFav(mediaInfo));
     }
-
-    if (listType === 'tv') {
-      if (!isFavourite) {
-        dispatch(tvShowAddToFav({ ...tvInfo, isFavourite: true }));
-        setIsFavourite(!isFavourite);
-      }
-      if (isFavourite) {
-        setIsFavourite(!isFavourite);
-        dispatch(tvShowRemoveFav({ ...tvInfo, isFavourite: false }));
-      }
-    }
+    setIsFavourite(!isFavourite);
   }
   const handleWatchLists = () => {
-    if (listType === 'movie') {
-      if (!isWatchListed) {
-        dispatch(movieAddtoWatch({ ...movieInfo, isWatchListed: true }));
-        setIsWatchListed(!isWatchListed);
-      }
-      if (isWatchListed) {
-        dispatch(movieremoveWatch({...movieInfo,isWatchListed : true }));
-        setIsWatchListed(!isWatchListed);
-      }
+    const mediaInfo = { id: listType === 'movie' ? movieId : tvId,imageurl,mediatitle, listType , isWatchListed:true };
+    if (!isWatchListed) {
+      dispatch(listType === 'movie' ? movieAddtoWatch(mediaInfo) : tvShowAddtoWatch(mediaInfo));
+    } else {
+      dispatch(listType === 'movie' ? movieremoveWatch(mediaInfo) : tvShowremoveWatch(mediaInfo));
     }
-
-    if (listType === 'tv') {
-      if (!isWatchListed) {
-        dispatch(tvShowAddtoWatch({...tvInfo,isWatchListed : true}));
-        setIsWatchListed(!isWatchListed);
-      }
-      if (isWatchListed) {
-        dispatch(tvShowremoveWatch({...tvInfo,isWatchListed : true}));
-        setIsWatchListed(!isWatchListed);
-      }
-    }
+    setIsWatchListed(!isWatchListed);
   }
 
   const handleImageLoad = () => {
@@ -131,7 +99,7 @@ const Mediacard = ({ movieId, tvId, imageurl, imgtitle, movietitle, width = 170,
             }}
           />
         </Card>
-        <Tooltip title={movietitle}>
+        <Tooltip title={mediatitle}>
           <Typography
             gutterBottom
             variant="h6"
@@ -140,7 +108,7 @@ const Mediacard = ({ movieId, tvId, imageurl, imgtitle, movietitle, width = 170,
             color={'white'}
             sx={{ width: { width }, textAlign: 'center', '&:hover': { color: '#E50914', cursor: 'pointer' }, pt: 1, userSelect: 'none' }}
           >
-            {movietitle}
+            {mediatitle}
           </Typography>
         </Tooltip>
         <Grid container justifyContent='space-around' >

@@ -28,9 +28,9 @@ const WatchList = () => {
                                                 <MovieCard
                                                     key={index}
                                                     listType={movies?.listType}
-                                                    movieId={movies?.movieId}
+                                                    movieId={movies?.id}
                                                     imageurl={movies.imageurl}
-                                                    movietitle={movies?.movietitle}
+                                                    mediatitle={movies?.mediatitle}
                                                     watchList={movies?.isWatchListed}
                                                 />
                                             </Grid>
@@ -55,10 +55,11 @@ const WatchList = () => {
                                                 <MovieCard
                                                     key={index}
                                                     listType={tvshow?.listType}
-                                                    tvId={tvshow?.tvId}
+                                                    tvId={tvshow?.id}
                                                     imageurl={tvshow?.imageurl}
-                                                    movietitle={tvshow?.movietitle}
-                                                    watchList={tvshow?.isWatchListed}
+                                                    mediatitle={tvshow?.mediatitle}
+                                                    watchlisted={tvshow?.isWatchListed}
+                                                    favourited={tvshow?.isFavourite}
                                                 />
                                             </Grid>
                                         ))
@@ -70,7 +71,7 @@ const WatchList = () => {
                 </Box>
             )
             :
-            <Typography>No data to show</Typography>
+            <Typography color='white'>No data to show</Typography>
   )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CustomButton = ({label = 'SRK Movies', color = 'black', textColor='#fff', fontSize = 23, onClick, isDisabled}) => {
   return (
-    <button
+    <button 
       style={{
         backgroundColor: color,
         padding: '10px 20px',
