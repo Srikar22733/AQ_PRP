@@ -1,12 +1,12 @@
+import { Button } from '@mui/material'
 import React from 'react'
 
 const CustomButton = ({label = 'SRK Movies', color = 'black', textColor='#fff', fontSize = 23, onClick, isDisabled}) => {
   return (
-    <button 
+    <Button 
       style={{
         backgroundColor: color,
         padding: '10px 20px',
-        borderRadius: '5px',
         border: 'none',
         color: textColor,
         cursor: isDisabled ? 'not-allowed' : 'pointer',
@@ -17,7 +17,7 @@ const CustomButton = ({label = 'SRK Movies', color = 'black', textColor='#fff', 
       disabled={isDisabled}
     >
       {label}
-    </button>
+    </Button>
   )
 }
 

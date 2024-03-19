@@ -34,16 +34,17 @@ const TvShowPage = () => {
 
     return (
         <Grid container direction={'column'}
-            sx={{ bgcolor: 'black', padding: '1rem' }}
+            sx={{ bgcolor: 'black', paddingTop: '5rem' }}
         >
             <Grid container direction={'row'}>
                 {
-                    tvShowList.map((tvshow) => (
+                    tvShowList.map((tvshow, index) => (
                         <Grid item
                             sx={{ display: 'grid', placeItems: 'center', p: '5px' }}
                             xs={12} sm={6} md={4} lg={3} xl={2}
                         >
                             <Mediacard
+                                key={tvshow?.id}
                                 listType='tv'
                                 tvId={tvshow?.id}
                                 imageurl={apiConfig?.originalImg(tvshow?.poster_path)}

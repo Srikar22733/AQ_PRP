@@ -33,8 +33,8 @@ const Home = () => {
 
         <>
             <Box
-                sx={{ padding: '1rem' }}>
-                <Typography color='white' variant='h4' sx={{ userSelect: 'none', pb: 5 }}>Top rated Movies</Typography>
+                sx={{ padding: '5rem' }}>
+                <Typography color='white' variant='h4' textAlign='center' sx={{ userSelect: 'none', pb: 5 }}>Top rated Movies</Typography>
                 <Grid container
                 >
                     {/* <Carousel animation="slide" 
@@ -70,7 +70,6 @@ const Home = () => {
                                     listType='movie'
                                     movieId={movies?.id}
                                     imageurl={apiConfig?.originalImg(movies?.poster_path)}
-                                    imgtitle={movies?.overview}
                                     mediatitle={movies?.original_title}
                                 />
                             </Grid>
@@ -91,7 +90,6 @@ const Home = () => {
                                     listType='tv'
                                     tvId={tvshow?.id}
                                     imageurl={apiConfig?.originalImg(tvshow?.poster_path)}
-                                    imgtitle={tvshow?.overview}
                                     mediatitle={tvshow?.original_name}
                                 />
                             </Grid>

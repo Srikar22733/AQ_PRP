@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import movieData, { category } from '../../services/movieApi'
 import { Grid, Pagination, Box, Typography } from '@mui/material'
-import MovieCard from '../../components/mediaCard'
+import MediaCard from '../../components/mediaCard'
 import apiConfig from '../../services/apiConfig'
 
 const MoviesPage = () => {
@@ -20,7 +20,7 @@ const MoviesPage = () => {
                 if (response) {
                     setMoviesList(response?.data?.results);
                 }
-                console.log(response)
+                console.log(response?.data?.results)
             }
             catch (error) {
                 console.log(error)
@@ -39,7 +39,7 @@ const MoviesPage = () => {
 
     return (
         <Grid container direction={'column'}
-            sx={{ bgcolor: 'black', padding: '1rem' }}
+            sx={{ padding: '1rem', paddingTop:'5rem' }}
         >
             <Grid container direction={'row'}>
                 {
@@ -49,15 +49,13 @@ const MoviesPage = () => {
                             xs={12} sm={6} md={4} lg={3} xl={2}
                             key={index}
                         >
-                            <MovieCard
+                            <MediaCard
+                                key={movies?.id}
                                 listType='movie'
-                                key={index}
                                 movieId={movies?.id}
                                 imageurl={apiConfig?.originalImg(movies?.poster_path)}
                                 imgtitle={movies?.overview}
-                                movietitle={movies?.original_title}
-                                favourited={movies?.isFavourite}
-                                watchlisted={movies?.isWatchList}
+                                mediatitle={movies?.original_title}
                             />
                         </Grid>
                     ))

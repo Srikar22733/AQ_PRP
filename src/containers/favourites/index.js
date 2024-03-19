@@ -13,23 +13,21 @@ const FavouritesList = () => {
     return (
         (favMovieData.length > 0 || favTvShowData.length > 0) ?
             (
-                <Box sx={{ bgcolor: 'black', padding: '1rem' }}>
+                <Box sx={{ bgcolor: 'black',  paddingTop:'5rem' }}>
                     {
                         favMovieData.length > 0 && (
                             <>
-
                                 <Typography color='white' variant='h4' sx={{ userSelect: 'none', pb: 5 }}>Favourite Movies</Typography>
 
                                 <Grid container>
                                     {
-                                        favMovieData.map((movies, index) => (
+                                        favMovieData.map((movies) => (
                                             <Grid item
                                                 sx={{ display: 'grid', placeItems: 'center', p: '5px' }}
                                                 xs={12} sm={6} md={4} lg={3} xl={2}
-                                                key={index}
                                             >
                                                 <Mediacard
-                                                    key={index}
+                                                    key={movies?.id}
                                                     listType={movies?.listType}
                                                     movieId={movies?.id}
                                                     imageurl={movies.imageurl}
@@ -74,7 +72,7 @@ const FavouritesList = () => {
                 </Box>
             )
             :
-            <Typography color='white'>No data to show</Typography>
+            <Typography color='white' sx={{ paddingTop:'5rem'}}>No data to show</Typography>
     )
 }
 

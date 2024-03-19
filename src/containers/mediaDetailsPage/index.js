@@ -44,7 +44,7 @@ const MediaDetails = () => {
     return (
         <Box
             sx={{
-                height: 'calc(87vh - 64px)',
+                height:'88vh',
                 overflow: 'hidden',
                 backgroundImage: ` linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url(${apiConfig?.originalImg(detail?.backdrop_path)})`,
                 backgroundRepeat: 'no-repeat',

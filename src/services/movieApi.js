@@ -37,12 +37,24 @@ const movieData = {
     },
     getMovieById: (Id, params) => {
         const url = `${apiConfig?.baseUrl}movie/${Id}`;
-        return axiosClient.get(url, { params: { api_key: apiConfig.api_key, ...params } })
+        return axiosClient.get(url, { params: { api_key: apiConfig.api_key, ...params } });
     },
     getTvListById: (Id, params) => {
         const url = `${apiConfig?.baseUrl}tv/${Id}`;
-        return axiosClient.get(url, { params: { api_key: apiConfig.api_key, ...params } })
-    }
+        return axiosClient.get(url, { params: { api_key: apiConfig.api_key, ...params } });
+    },
+    searchMulti: (input, params) => {
+        const url = `${apiConfig.baseUrl}search/multi`;
+        return axiosClient.get(url,{params: {query : input, api_key: apiConfig.api_key, ...params} });
+    },
+    searchMovie: (input, params) => {
+        const url = `${apiConfig.baseUrl}search/movie`;
+        return axiosClient.get(url,{params: {query : input, api_key: apiConfig.api_key, ...params} })
+    },
+    searchTvShow: (input, params) => {
+        const url = `${apiConfig.baseUrl}search/tv`;
+        return axiosClient.get(url,{params: {query : input, api_key: apiConfig.api_key, ...params} })
+    },
 }
 
 export default movieData;
